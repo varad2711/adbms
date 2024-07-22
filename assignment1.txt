@@ -1,0 +1,384 @@
+Microsoft Windows [Version 10.0.19045.4651]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Varad>mongosh
+Current Mongosh Log ID: 669e6e8518b459f512c4e49a
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.12
+Using MongoDB:          7.0.12
+Using Mongosh:          2.2.12
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-07-19T20:47:48.116+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use company
+switched to db company
+company> db.employee.insertMany([
+...   {
+...     "eid": 1,
+...     "ename": "Akash Sharma",
+...     "designation": "Analyst",
+...     "hiredate": "2015-07-01",
+...     "salary": 15000,
+...     "hobbies": ["reading", "painting", "cycling", "traveling"],
+...     "department": "Sales"
+...   },
+...   {
+...     "eid": 2,
+...     "ename": "Sunita Rao",
+...     "designation": "Manager",
+...     "hiredate": "2013-03-15",
+...     "salary": 25000,
+...     "hobbies": ["reading", "traveling", "swimming", "cooking"],
+...     "department": "HR"
+...   },
+...   {
+...     "eid": 3,
+...     "ename": "Rajesh Kumar",
+...     "designation": "Salesman",
+...     "hiredate": "2014-10-20",
+...     "salary": 8000,
+...     "hobbies": ["reading", "swimming", "painting"],
+...     "department": "Production"
+...   },
+...   {
+...     "eid": 4,
+...     "ename": "Pooja Mehta",
+...     "designation": "Executive",
+...     "hiredate": "2016-11-01",
+...     "salary": 9500,
+...     "hobbies": ["painting", "cooking", "reading", "traveling"],
+...     "department": "Marketing"
+...   },
+...   {
+...     "eid": 5,
+...     "ename": "Ravi Patel",
+...     "designation": "Analyst",
+...     "hiredate": "2015-09-15",
+...     "salary": 11000,
+...     "hobbies": ["cycling", "reading", "traveling"],
+...     "department": "HR"
+...   },
+...   {
+...     "eid": 6,
+...     "ename": "Anita Simmons",
+...     "designation": "Manager",
+...     "hiredate": "2012-01-10",
+...     "salary": 28000,
+...     "hobbies": ["traveling", "swimming"],
+...     "department": "Finance"
+...   },
+...   {
+...     "eid": 7,
+...     "ename": "Sanjay Gupta",
+...     "designation": "Salesman",
+...     "hiredate": "2017-05-22",
+...     "salary": 10000,
+...     "hobbies": ["reading", "painting", "cycling", "swimming"],
+...     "department": "Sales"
+...   },
+...   {
+...     "eid": 8,
+...     "ename": "Meena Agarwal",
+...     "designation": "Executive",
+...     "hiredate": "2018-06-15",
+...     "salary": 8500,
+...     "hobbies": ["traveling", "painting", "cooking"],
+...     "department": "Marketing"
+...   },
+...   {
+...     "eid": 9,
+...     "ename": "Nitin Verma",
+...     "designation": "Salesman",
+...     "hiredate": "2016-12-01",
+...     "salary": 9500,
+...     "hobbies": ["cooking", "reading", "traveling", "swimming"],
+...     "department": "Sales"
+...   },
+...   {
+...     "eid": 10,
+...     "ename": "Neha Sharma",
+...     "designation": "Intern",
+...     "hiredate": "2019-03-10",
+...     "salary": 6000,
+...     "hobbies": ["swimming", "reading", "cycling"],
+...     "department": "Finance"
+...   }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('669e6e9918b459f512c4e49b'),
+    '1': ObjectId('669e6e9918b459f512c4e49c'),
+    '2': ObjectId('669e6e9918b459f512c4e49d'),
+    '3': ObjectId('669e6e9918b459f512c4e49e'),
+    '4': ObjectId('669e6e9918b459f512c4e49f'),
+    '5': ObjectId('669e6e9918b459f512c4e4a0'),
+    '6': ObjectId('669e6e9918b459f512c4e4a1'),
+    '7': ObjectId('669e6e9918b459f512c4e4a2'),
+    '8': ObjectId('669e6e9918b459f512c4e4a3'),
+    '9': ObjectId('669e6e9918b459f512c4e4a4')
+  }
+}
+company> db.employee.find({designation:{$in:["Analyst","Salesman"]}},{ename:1})
+
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+company> db.employee.find({designation:{$in:["Analyst","Salesman"]}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
+  { _id: ObjectId('669e6e9918b459f512c4e49f'), ename: 'Ravi Patel' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), ename: 'Sanjay Gupta' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a3'), ename: 'Nitin Verma' }
+]
+company> db.employee.find({},{eid:1,ename:1,salary:1})
+[
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49b'),
+    eid: 1,
+    ename: 'Akash Sharma',
+    salary: 15000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49c'),
+    eid: 2,
+    ename: 'Sunita Rao',
+    salary: 25000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49d'),
+    eid: 3,
+    ename: 'Rajesh Kumar',
+    salary: 8000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49e'),
+    eid: 4,
+    ename: 'Pooja Mehta',
+    salary: 9500
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49f'),
+    eid: 5,
+    ename: 'Ravi Patel',
+    salary: 11000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a0'),
+    eid: 6,
+    ename: 'Anita Simmons',
+    salary: 28000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a1'),
+    eid: 7,
+    ename: 'Sanjay Gupta',
+    salary: 10000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a2'),
+    eid: 8,
+    ename: 'Meena Agarwal',
+    salary: 8500
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a3'),
+    eid: 9,
+    ename: 'Nitin Verma',
+    salary: 9500
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a4'),
+    eid: 10,
+    ename: 'Neha Sharma',
+    salary: 6000
+  }
+]
+company> db.employee.find({designation:{$ne:"Manager"}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
+  { _id: ObjectId('669e6e9918b459f512c4e49e'), ename: 'Pooja Mehta' },
+  { _id: ObjectId('669e6e9918b459f512c4e49f'), ename: 'Ravi Patel' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), ename: 'Sanjay Gupta' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a2'), ename: 'Meena Agarwal' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a3'), ename: 'Nitin Verma' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a4'), ename: 'Neha Sharma' }
+]
+company> db.employee.find({eid:{$in:[1,3,7,9]}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), ename: 'Sanjay Gupta' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a3'), ename: 'Nitin Verma' }
+]
+company> db.employee.find({"hobbies.1":"reading"},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49f'), ename: 'Ravi Patel' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a3'), ename: 'Nitin Verma' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a4'), ename: 'Neha Sharma' }
+]
+company> db.employee.find({hiredate:{$gte:"2015-06-30",&lte:"2015-12-31"}},{ename:1})
+Uncaught:
+SyntaxError: Unexpected token (1:46)
+
+> 1 | db.employee.find({hiredate:{$gte:"2015-06-30",&lte:"2015-12-31"}},{ename:1})
+    |                                               ^
+  2 |
+
+company> db.employee.find({hiredate:{$gte:"2015-06-30",$lte:"2015-12-31"}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49f'), ename: 'Ravi Patel' }
+]
+company> db.employee.distinct("designation")
+[ 'Analyst', 'Executive', 'Intern', 'Manager', 'Salesman' ]
+company> db.employee.find({salary:{$lt:10000}},{eid:1,ename:1,salary:1})
+[
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49d'),
+    eid: 3,
+    ename: 'Rajesh Kumar',
+    salary: 8000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49e'),
+    eid: 4,
+    ename: 'Pooja Mehta',
+    salary: 9500
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a2'),
+    eid: 8,
+    ename: 'Meena Agarwal',
+    salary: 8500
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a3'),
+    eid: 9,
+    ename: 'Nitin Verma',
+    salary: 9500
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a4'),
+    eid: 10,
+    ename: 'Neha Sharma',
+    salary: 6000
+  }
+]
+company> db.employee.find({department:"Production"},{ename:1,designation:1})
+[
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49d'),
+    ename: 'Rajesh Kumar',
+    designation: 'Salesman'
+  }
+]
+company> db.employee.find({ename:{$regex:/^A/}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a0'), ename: 'Anita Simmons' }
+]
+company> db.employee.find({ename:{$regex:/sh/}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' }
+]
+company> db.employee.find({ename:{$regex:/^S|s$/}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49c'), ename: 'Sunita Rao' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a0'), ename: 'Anita Simmons' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), ename: 'Sanjay Gupta' }
+]
+company> db.employee.find({department:{$ne:"HR"}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
+  { _id: ObjectId('669e6e9918b459f512c4e49e'), ename: 'Pooja Mehta' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a0'), ename: 'Anita Simmons' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), ename: 'Sanjay Gupta' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a2'), ename: 'Meena Agarwal' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a3'), ename: 'Nitin Verma' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a4'), ename: 'Neha Sharma' }
+]
+company> db.employee.countDocuments({department:"Sales"})
+3
+company> db.employee.distinct("designation").length
+5
+company> db.employee.find({salary:{$gte:10000,$lte:20000}},{eid:1,ename:1,salary:1})
+[
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49b'),
+    eid: 1,
+    ename: 'Akash Sharma',
+    salary: 15000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e49f'),
+    eid: 5,
+    ename: 'Ravi Patel',
+    salary: 11000
+  },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a1'),
+    eid: 7,
+    ename: 'Sanjay Gupta',
+    salary: 10000
+  }
+]
+company> db.employee.find({ salary: { $gte: 15000 } }, { eid: 1, ename: 1, _id: 0 })
+[
+  { eid: 1, ename: 'Akash Sharma' },
+  { eid: 2, ename: 'Sunita Rao' },
+  { eid: 6, ename: 'Anita Simmons' }
+]
+company> db.employee.find({department:"Sales",salary:10000})
+[
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a1'),
+    eid: 7,
+    ename: 'Sanjay Gupta',
+    designation: 'Salesman',
+    hiredate: '2017-05-22',
+    salary: 10000,
+    hobbies: [ 'reading', 'painting', 'cycling', 'swimming' ],
+    department: 'Sales'
+  }
+]
+company> db.employee.find({hobbies:{$all:["reading","painting"]}},{ename:1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
+  { _id: ObjectId('669e6e9918b459f512c4e49e'), ename: 'Pooja Mehta' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), ename: 'Sanjay Gupta' }
+]
+company> db.employee.find({},{firstHobby:{$arrayElemAt:["$hobbies",0]}})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49b'), firstHobby: 'reading' },
+  { _id: ObjectId('669e6e9918b459f512c4e49c'), firstHobby: 'reading' },
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), firstHobby: 'reading' },
+  { _id: ObjectId('669e6e9918b459f512c4e49e'), firstHobby: 'painting' },
+  { _id: ObjectId('669e6e9918b459f512c4e49f'), firstHobby: 'cycling' },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a0'),
+    firstHobby: 'traveling'
+  },
+  { _id: ObjectId('669e6e9918b459f512c4e4a1'), firstHobby: 'reading' },
+  {
+    _id: ObjectId('669e6e9918b459f512c4e4a2'),
+    firstHobby: 'traveling'
+  },
+  { _id: ObjectId('669e6e9918b459f512c4e4a3'), firstHobby: 'cooking' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a4'), firstHobby: 'swimming' }
+]
+company> db.employee.find({"hobbies":{$size:3}},{"ename":1})
+[
+  { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
+  { _id: ObjectId('669e6e9918b459f512c4e49f'), ename: 'Ravi Patel' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a2'), ename: 'Meena Agarwal' },
+  { _id: ObjectId('669e6e9918b459f512c4e4a4'), ename: 'Neha Sharma' }
+]
+company>
