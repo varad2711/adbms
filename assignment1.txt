@@ -126,9 +126,6 @@ company> db.employee.insertMany([
   }
 }
 company> db.employee.find({designation:{$in:["Analyst","Salesman"]}},{ename:1})
-
-(To exit, press Ctrl+C again or Ctrl+D or type .exit)
-company> db.employee.find({designation:{$in:["Analyst","Salesman"]}},{ename:1})
 [
   { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
   { _id: ObjectId('669e6e9918b459f512c4e49d'), ename: 'Rajesh Kumar' },
@@ -223,14 +220,6 @@ company> db.employee.find({"hobbies.1":"reading"},{ename:1})
   { _id: ObjectId('669e6e9918b459f512c4e4a3'), ename: 'Nitin Verma' },
   { _id: ObjectId('669e6e9918b459f512c4e4a4'), ename: 'Neha Sharma' }
 ]
-company> db.employee.find({hiredate:{$gte:"2015-06-30",&lte:"2015-12-31"}},{ename:1})
-Uncaught:
-SyntaxError: Unexpected token (1:46)
-
-> 1 | db.employee.find({hiredate:{$gte:"2015-06-30",&lte:"2015-12-31"}},{ename:1})
-    |                                               ^
-  2 |
-
 company> db.employee.find({hiredate:{$gte:"2015-06-30",$lte:"2015-12-31"}},{ename:1})
 [
   { _id: ObjectId('669e6e9918b459f512c4e49b'), ename: 'Akash Sharma' },
@@ -331,7 +320,7 @@ company> db.employee.find({salary:{$gte:10000,$lte:20000}},{eid:1,ename:1,salary
     salary: 10000
   }
 ]
-company> db.employee.find({ salary: { $gte: 15000 } }, { eid: 1, ename: 1, _id: 0 })
+company> db.employee.find({salary:{$gte:15000}},{eid:1,ename:1})
 [
   { eid: 1, ename: 'Akash Sharma' },
   { eid: 2, ename: 'Sunita Rao' },
