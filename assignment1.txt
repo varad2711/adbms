@@ -16,6 +16,8 @@ For mongosh info see: https://docs.mongodb.com/mongodb-shell/
 
 test> use company
 switched to db company
+company> db.createCollection("employee")
+{ ok: 1 }
 company> db.employee.insertMany([
 ...   {
 ...     "eid": 1,
