@@ -1,0 +1,265 @@
+varad> db.createCollection("employee")
+\{ ok: 1 }
+varad> show collections
+\employee
+varad> show collections
+employee
+varad> db.employee.insertMany([
+...   {
+...     "eid": 1,
+...     "ename": "Akash Sharma",
+...     "designation": "Analyst",
+...     "hiredate": "2015-07-01",
+...     "salary": 15000,
+...     "hobbies": ["reading", "painting", "cycling", "traveling"],
+...     "department": "Sales"
+...   },
+...   {
+...     "eid": 2,
+...     "ename": "Sunita Rao",
+...     "designation": "Manager",
+...     "hiredate": "2013-03-15",
+...     "salary": 25000,
+...     "hobbies": ["reading", "traveling", "swimming", "cooking"],
+...     "department": "HR"
+...   },
+...   {
+...     "eid": 3,
+...     "ename": "Rajesh Kumar",
+...     "designation": "Salesman",
+...     "hiredate": "2014-10-20",
+...     "salary": 30000,
+...     "hobbies": ["reading", "swimming", "painting"],
+...     "department": "Production"
+...   },
+...   {
+...     "eid": 4,
+...     "ename": "Pooja Mehta",
+...     "designation": "Executive",
+...     "hiredate": "2016-11-01",
+...     "salary": 9500,
+...     "hobbies": ["painting", "cooking", "reading", "traveling"],
+...     "department": "Marketing"
+...   },
+...   {
+...     "eid": 5,
+...     "ename": "Ravi Patel",
+...     "designation": "Analyst",
+...     "hiredate": "2015-09-15",
+...     "salary": 21000,
+...     "hobbies": ["cycling", "reading", "traveling"],
+...     "department": "HR"
+...   },
+...   {
+...     "eid": 6,
+...     "ename": "Anita Simmons",
+...     "designation": "Manager",
+...     "hiredate": "2012-01-10",
+...     "salary": 28000,
+...     "hobbies": ["traveling", "swimming"],
+...     "department": "Finance"
+...   },
+...   {
+...     "eid": 7,
+...     "ename": "Sanjay Gupta",
+...     "designation": "Salesman",
+...     "hiredate": "2017-05-22",
+...     "salary": 10000,
+...     "hobbies": ["reading", "painting", "cycling", "swimming"],
+...     "department": "Sales"
+...   },
+...   {
+...     "eid": 8,
+...     "ename": "Meena Agarwal",
+...     "designation": "Executive",
+...     "hiredate": "2018-06-15",
+...     "salary": 25000,
+...     "hobbies": ["traveling", "painting", "cooking"],
+...     "department": "Marketing"
+...   },
+...   {
+...     "eid": 9,
+...     "ename": "Nitin Verma",
+...     "designation": "Salesman",
+...     "hiredate": "2016-12-01",
+...     "salary": 9500,
+...     "hobbies": ["cooking", "reading", "traveling", "swimming"],
+...     "department": "Sales"
+...   },
+...   {
+...     "eid": 10,
+...     "ename": "Neha Sharma",
+...     "designation": "Intern",
+...     "hiredate": "2019-03-10",
+...     "salary": 26000,
+...     "hobbies": ["swimming", "reading", "cycling"],
+...     "department": "Finance"
+...   }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66b5a107a3148ec936149f48'),
+    '1': ObjectId('66b5a107a3148ec936149f49'),
+    '2': ObjectId('66b5a107a3148ec936149f4a'),
+    '3': ObjectId('66b5a107a3148ec936149f4b'),
+    '4': ObjectId('66b5a107a3148ec936149f4c'),
+    '5': ObjectId('66b5a107a3148ec936149f4d'),
+    '6': ObjectId('66b5a107a3148ec936149f4e'),
+    '7': ObjectId('66b5a107a3148ec936149f4f'),
+    '8': ObjectId('66b5a107a3148ec936149f50'),
+    '9': ObjectId('66b5a107a3148ec936149f51')
+  }
+}
+varad> db.employee.aggregate([{},{averageSalary:{$avg:"$salary"}},{}])
+MongoServerError[Location40323]: A pipeline stage specification object must contain exactly one field.
+varad> db.employee.aggregate([{},{$group:{averageSalary:{$avg:"$salary"}}},{}])
+MongoServerError[Location40323]: A pipeline stage specification object must contain exactly one field.
+varad> db.employee.aggregate([{$group:{averageSalary:{$avg:"$salary"}}}])
+MongoServerError[Location15955]: a group specification must include an _id
+varad> db.employee.aggregate([{$group:{_id:"$eid",averageSalary:{$avg:"$salary"}}}])
+[
+  { _id: 4, averageSalary: 9500 },
+  { _id: 2, averageSalary: 25000 },
+  { _id: 8, averageSalary: 25000 },
+  { _id: 9, averageSalary: 9500 },
+  { _id: 1, averageSalary: 15000 },
+  { _id: 3, averageSalary: 30000 },
+  { _id: 10, averageSalary: 26000 },
+  { _id: 5, averageSalary: 21000 },
+  { _id: 6, averageSalary: 28000 },
+  { _id: 7, averageSalary: 10000 }
+]
+varad> db.employee.aggregate([{$group:{_id:"$department",averageSalary:{$avg:"$salary"}}}])
+[
+  { _id: 'Sales', averageSalary: 11500 },
+  { _id: 'HR', averageSalary: 23000 },
+  { _id: 'Production', averageSalary: 30000 },
+  { _id: 'Marketing', averageSalary: 17250 },
+  { _id: 'Finance', averageSalary: 27000 }
+]
+varad> db.employee.aggregate([{$group:{_id:null,averageSalary:{$avg:"$salary"}}}])
+[ { _id: null, averageSalary: 19900 } ]
+varad> db.employee.aggregate([{$group:{_id:"$department",sumSalary:{$sum:"$salary"}}}])
+[
+  { _id: 'Finance', sumSalary: 54000 },
+  { _id: 'Marketing', sumSalary: 34500 },
+  { _id: 'HR', sumSalary: 46000 },
+  { _id: 'Sales', sumSalary: 34500 },
+  { _id: 'Production', sumSalary: 30000 }
+]
+varad> db.employee.aggregate([{$group:{_id:"$department",empCount:{$count:"$department"}}}])
+MongoServerError[TypeMismatch]: $count takes no arguments, i.e. $count:{}
+varad> db.employee.aggregate([{$group:{_id:"$department",empCount:{$count:{}}}}])
+[
+  { _id: 'Sales', empCount: 3 },
+  { _id: 'HR', empCount: 2 },
+  { _id: 'Production', empCount: 1 },
+  { _id: 'Marketing', empCount: 2 },
+  { _id: 'Finance', empCount: 2 }
+]
+varad> db.employee.aggregate([{$group:{_id:null,minimum:{$min:}}}])
+Uncaught:
+SyntaxError: Unexpected token (1:55)
+
+> 1 | db.employee.aggregate([{$group:{_id:null,minimum:{$min:}}}])
+    |                                                        ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:null,minimum:{$min:"salary"}}}])
+[ { _id: null, minimum: 'salary' } ]
+varad> db.employee.aggregate([{$group:{_id:null,minimum:{$min:"$salary"}}}])
+[ { _id: null, minimum: 9500 } ]
+varad> db.employee.aggregate([{$group:{_id:null,maximum:{$max:"$salary"}}}])
+[ { _id: null, maximum: 30000 } ]
+varad> db.employee.aggregate([{$group:{_id:null,distin:{designation:{}}}}])
+MongoServerError[Location40234]: The field 'distin' must be an accumulator object
+varad> db.employee.aggregate([{$group:{_id:null,distin:{distinct:{"designation"}}}}])
+Uncaught:
+SyntaxError: Unexpected token (1:72)
+
+> 1 | db.employee.aggregate([{$group:{_id:null,distin:{distinct:{"designation"}}}}])
+    |                                                                         ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:null,distin:{distinct:{"$designation"}}}}])
+Uncaught:
+SyntaxError: Unexpected token (1:73)
+
+> 1 | db.employee.aggregate([{$group:{_id:null,distin:{distinct:{"$designation"}}}}])
+    |                                                                          ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:"$designation",disDes:{$distinct:{}}}}])
+MongoServerError[Location15952]: unknown group operator '$distinct'
+varad> db.employee.aggregate([{$group:{_id:"$designation",disDes:{$distinct:{"designation"}}}}])
+Uncaught:
+SyntaxError: Unexpected token (1:83)
+
+> 1 | db.employee.aggregate([{$group:{_id:"$designation",disDes:{$distinct:{"designation"}}}}])
+    |                                                                                    ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:"$designation",disDes:{$distinct:{}}}}])
+MongoServerError[Location15952]: unknown group operator '$distinct'
+varad> db.employee.aggregate([{$group:{_id:"$designation",$distinct:{}}}])
+MongoServerError[Location40234]: The field '$distinct' must be an accumulator object
+varad> db.employee.aggregate([{$group:{_id:null,disDes:{$distinct:{"$designation"}}}}])
+Uncaught:
+SyntaxError: Unexpected token (1:74)
+
+> 1 | db.employee.aggregate([{$group:{_id:null,disDes:{$distinct:{"$designation"}}}}])
+    |                                                                           ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:"$department",sumSalary:{$sum:"$salary"}}}{$sort:{Tab completion error: TypeError: Invalid Version: >=6.0.10 <7.0.0 || >=7.0.2
+    at new SemVer (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:3:3893893)
+    at e.exports (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:3:3898711)
+    at e.exports [as gte] (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:3:3899306)
+    at A (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:135:4530)
+    at eval (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:135:4904)
+    at eval (eval at <anonymous> (eval at module.exports (node:lib-boxednode/mongosh:103:20)), <anonymous>:104:40)
+    at _cr2.filter (eval at <anonymous> (eval at module.exports (node:lib-boxednode/mongosh:103:20)), <anonymous>:106:184)
+    at p (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:135:4863)
+    at t.default (eval at module.exports (node:lib-boxednode/mongosh:103:20), <anonymous>:135:7236)
+varad> db.employee.aggregate([{$group:{_id:"$department",sumSalary:{$sum:"$salary"}}}{$sort:{}}])
+varad> db.employee.aggregate([{$group:{_id:"$department",averageSalary:{$avg:"$salary"}{$sort:"$averageSalary"}}}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:80)
+
+> 1 | db.employee.aggregate([{$group:{_id:"$department",averageSalary:{$avg:"$salary"}{$sort:"$averageSalary"}}}])
+    |                                                                                 ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:"$department",averageSalary:{$avg:"$salary"},{$sort:"$averageSalary"}}}])
+Uncaught:
+SyntaxError: Unexpected token (1:81)
+
+> 1 | db.employee.aggregate([{$group:{_id:"$department",averageSalary:{$avg:"$salary"},{$sort:"$averageSalary"}}}])
+    |                                                                                  ^
+  2 |
+
+varad> db.employee.aggregate([{$group:{_id:"$department",averageSalary:{$avg:"$salary"}}},{$sort:{total:-1}}])
+[
+  { _id: 'Sales', averageSalary: 11500 },
+  { _id: 'Production', averageSalary: 30000 },
+  { _id: 'HR', averageSalary: 23000 },
+  { _id: 'Marketing', averageSalary: 17250 },
+  { _id: 'Finance', averageSalary: 27000 }
+]
+varad> db.employee.aggregate([{$group:{_id: "$department",averageSalary:{$avg:"$salary"}}},{$match:{averageSalary:{$gt:25000}}},{$sort:{averaaverageSalary:-1}}])
+[
+  { _id: 'Production', averageSalary: 30000 },
+  { _id: 'Finance', averageSalary: 27000 }
+]
+varad> db.employee.aggregate([{$group:{_id: "$designation"}},{$project:{_id: 0,designation: "$_id"}}])
+[
+  { designation: 'Manager' },
+  { designation: 'Salesman' },
+  { designation: 'Analyst' },
+  { designation: 'Executive' },
+  { designation: 'Intern' }
+]
+varad> db.employee.distinct("designation")
+[ 'Analyst', 'Executive', 'Intern', 'Manager', 'Salesman' ]
+varad> 
